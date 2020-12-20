@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity(), DataAdapter.Listener {
 
     private fun initRecyclerView() {
 
-        rv_android_list.setHasFixedSize(true)
+        recycler_view.setHasFixedSize(true)
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
-        rv_android_list.layoutManager = layoutManager
+        recycler_view.layoutManager = layoutManager
     }
 
     private fun loadJSON() {
@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity(), DataAdapter.Listener {
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(NetworkInterface::class.java)
 
+//        Request initial list and get a disposable object in return, add this object
+//        to our composite disposables
         mCompositeDisposable?.add(requestInterface.getData()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -58,9 +60,9 @@ class MainActivity : AppCompatActivity(), DataAdapter.Listener {
     private fun handleResponse(response: Response<List<FizzData>>) {
 
         mFizzDataArrayList = response.body()!! as ArrayList<FizzData>
-        mAdapter = DataAdapter(mFizzDataArrayList!!, this)
+        mAdapter = DataAdapter(mFizzDataArrayList!!, this, this)
 
-        rv_android_list.adapter = mAdapter
+        recycler_view.adapter = mAdapter
     }
 
     private fun handleError(error: Throwable) {

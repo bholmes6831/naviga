@@ -1,13 +1,15 @@
 package com.bholmes.fizzbuzz
 
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.recycler_view_row.view.*
 
-class DataAdapter (private val dataList : ArrayList<FizzData>, private val listener : Listener) : RecyclerView.Adapter<DataAdapter.ViewHolder>() {
+class DataAdapter (private val dataList : ArrayList<FizzData>, private val listener : Listener, var context: Context) : RecyclerView.Adapter<DataAdapter.ViewHolder>() {
 
     interface Listener {
 
@@ -30,14 +32,24 @@ class DataAdapter (private val dataList : ArrayList<FizzData>, private val liste
         return ViewHolder(view)
     }
 
-    class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
         fun bind(fizzData: FizzData, listener: Listener, colors : Array<String>, position: Int) {
 
-            itemView.tv_name.text = fizzData.title
-//            itemView.tv_version.text = android.version
-//            itemView.tv_api_level.text = android.apiLevel
-            itemView.setBackgroundColor(Color.parseColor(colors[position % 6]))
+            itemView.title.text = fizzData.title
+
+            if(fizzData.media) {
+                itemView.media.visibility = View.VISIBLE
+            } else {
+                itemView.media.visibility = View.GONE
+            }
+
+            if(fizzData.image?.url != null) {
+                Glide.with(context).load(fizzData.image?.url).into(itemView.image)
+                itemView.image.visibility = View.VISIBLE
+            } else {
+                itemView.image.visibility = View.GONE
+            }
 
             itemView.setOnClickListener{ listener.onItemClick(fizzData) }
         }
