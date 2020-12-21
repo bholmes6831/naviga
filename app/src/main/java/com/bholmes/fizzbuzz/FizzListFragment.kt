@@ -74,5 +74,6 @@ class FizzListFragment : Fragment(), FizzDataAdapter.Listener {
 
     override fun onItemClick(fizzData: FizzData) {
         "${fizzData.title} Clicked !".toast(context!!)
+        (activity as NavigationHost).navigateTo(FizzDetailFragment(fizzData), true)
     }
 }
