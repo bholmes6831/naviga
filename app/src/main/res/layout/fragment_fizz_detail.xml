@@ -12,46 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fizz_detail_appbar_height"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:stateListAnimator="@animator/show_toolbar"
-        android:animateLayoutChanges="true"
-        >
+        android:animateLayoutChanges="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:collapsedTitleGravity="center"
+            app:contentScrim="@color/colorPrimary"
+            app:statusBarScrim="@color/colorPrimary"
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="Title"
             app:collapsedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             >
 
             <ImageView
+                android:id="@+id/appbar_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_detail_share"
-                android:contentDescription="Collapsing Image View"
+                android:contentDescription="@string/fizz_detail_image_content_description"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
                 >
-
             </ImageView>
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                app:navigationIcon="@drawable/ic_detail_back_no_circle"
                 app:menu="@menu/menu_fizz_detail"
-                app:navigationIcon="@drawable/ic_detail_back"
                 >
-
             </com.google.android.material.appbar.MaterialToolbar>
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -62,79 +61,15 @@
         android:paddingBottom="72dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp">
-
             <TextView
-                android:id="@+id/plant_detail_name"
-                android:layout_width="0dp"
+                android:id="@+id/description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center_horizontal"
+                android:layout_margin="12dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="holder"
-                android:textAppearance="?attr/textAppearanceHeadline5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/plant_watering_header"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center_horizontal"
-                android:text="HOlder text"
-                android:textColor="?attr/colorAccent"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plant_detail_name" />
-
-            <TextView
-                android:id="@+id/plant_watering"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center_horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plant_watering_header" />
-
-            <ImageView
-                android:id="@+id/gallery_nav"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
-                android:contentDescription="Image view"
-                android:focusable="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plant_detail_name" />
-
-            <TextView
-                android:id="@+id/plant_description"
-                style="?android:attr/textAppearanceMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:textIsSelectable="true"
-                android:minHeight="555dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plant_watering" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                />
 
     </androidx.core.widget.NestedScrollView>
 

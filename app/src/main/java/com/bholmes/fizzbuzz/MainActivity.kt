@@ -16,22 +16,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), NavigationHost {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.container, FizzListFragment())
-                .commit()
-        }
     }
-
-
 
     override fun navigateTo(fragment: Fragment, addToBackstack: Boolean) {
         val transaction = supportFragmentManager
@@ -41,13 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationHost {
         if (addToBackstack) {
             transaction.addToBackStack(null)
         }
-
         transaction.commit()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
 }
 

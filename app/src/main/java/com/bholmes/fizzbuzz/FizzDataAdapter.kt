@@ -17,10 +17,8 @@ class FizzDataAdapter (private val dataList : ArrayList<FizzData>, private val l
         fun onItemClick(fizzData : FizzData)
     }
 
-    private val colors : Array<String> = arrayOf("#EF5350", "#EC407A", "#AB47BC", "#7E57C2", "#5C6BC0", "#42A5F5")
-
     override fun onBindViewHolder(holder: FizzDataViewHolder, position: Int) {
-        holder.bind(dataList[position], listener, colors, position)
+        holder.bind(dataList[position], listener, position)
     }
 
     override fun getItemCount(): Int = dataList.count()
@@ -38,7 +36,7 @@ class FizzDataAdapter (private val dataList : ArrayList<FizzData>, private val l
 
     inner class FizzDataViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         // Keep view logic attached to viewHolder class
-        fun bind(fizzData: FizzData, listener: Listener, colors : Array<String>, position: Int) {
+        fun bind(fizzData: FizzData, listener: Listener, position: Int) {
             itemView.title.text = fizzData.title
             if(fizzData.media) {
                 itemView.media.visibility = View.VISIBLE
