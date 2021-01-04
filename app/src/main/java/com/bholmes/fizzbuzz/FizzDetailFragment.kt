@@ -15,19 +15,17 @@ import kotlinx.android.synthetic.main.fragment_fizz_detail.*
 import kotlinx.android.synthetic.main.fragment_fizz_detail.view.*
 import kotlinx.android.synthetic.main.fragment_fizz_main_list.*
 
-class FizzDetailFragment(fizzData: FizzData) : Fragment(){
+class FizzDetailFragment() : Fragment(){
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
+    private var url: String? = null
+    private var detailID: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         setFragmentResultListener("detailListener") { requestKey, bundle ->
-            val result = bundle.getInt("detailID")
-            if(bundle.containsKey("url")) {
-                setImage(bundle.getString("url")!!)
-            }
-            loadDetail(result)
+            loadBundle(bundle)
         }
     }
 
@@ -53,13 +51,22 @@ class FizzDetailFragment(fizzData: FizzData) : Fragment(){
         return view
     }
 
-    fun setImage(url: String) {
+    private fun loadBundle(bundle: Bundle) {
+        detailID = bundle.getInt("detailID")
+        if(bundle.containsKey("url")) {
+            url = bundle.getString("url")
+            setImage(url)
+        }
+        loadDetail(detailID!!)
+    }
+
+    private fun setImage(url: String?) {
         Glide.with(requireContext())
             .load(url)
             .into(appbar_image)
     }
 
-    fun loadDetail(id: Int) {
+    private fun loadDetail(id: Int) {
         mCompositeDisposable.add(ApiClient.getDetail("$id")
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -72,6 +79,26 @@ class FizzDetailFragment(fizzData: FizzData) : Fragment(){
             }))
     }
 
+    /**
+     * Called as soon as app is put into background, before onDestroy()
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("detailID", detailID!!)
+        if(url != null) {
+            outState.putString("url", url)
+        }
+    }
+
+    /**
+     * Called after onStart()
+     */
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if(savedInstanceState != null) {
+            loadBundle(savedInstanceState)
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

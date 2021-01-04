@@ -29,13 +29,11 @@ class FizzListFragment : Fragment(), FizzDataAdapter.Listener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_fizz_main_list, container, false)
         view.recycler_view.setHasFixedSize(true)
-        view.progress_bar.visibility = View.VISIBLE
         setupToolbar(view)
         loadJSON()
         return view
     }
 
-    //TODO
     private fun setupToolbar(view: View) {
         view.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
@@ -55,12 +53,10 @@ class FizzListFragment : Fragment(), FizzDataAdapter.Listener {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({ response ->
-                progress_bar.visibility = View.GONE
                 mFizzDataArrayList = response.body()!! as ArrayList<FizzData>
                 mAdapterFizz = FizzDataAdapter(mFizzDataArrayList!!, this, requireContext())
                 recycler_view.adapter = mAdapterFizz
             }, {error ->
-                progress_bar.visibility = View.GONE
                 Log.d(TAG, error.localizedMessage)
                 "Error ${error.localizedMessage}".toast(requireContext())
             }))
@@ -80,6 +76,6 @@ class FizzListFragment : Fragment(), FizzDataAdapter.Listener {
         val bundle = bundleOf("detailID" to fizzData.id)
         if (fizzData?.image?.url != null) bundle.putString("url", fizzData?.image?.url)
         setFragmentResult("detailListener", bundle)
-        (activity as NavigationHost).navigateTo(FizzDetailFragment(fizzData), true)
+        (activity as NavigationHost).navigateTo(FizzDetailFragment(), true)
     }
 }

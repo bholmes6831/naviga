@@ -2,5 +2,4 @@
 <resources>
     <dimen name="fizz_detail_appbar_height">278dp</dimen>
     <dimen name="toolbar_elevation">5dp</dimen>
-
 </resources>

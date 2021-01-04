@@ -2,4 +2,5 @@
     <string name="app_name">FizzBuzz</string>
     <string name="fizz_detail_image_content_description">Fizz Detail ImageView</string>
     <string name="menu_item_share">Share</string>
+    <string name="title_string">Title</string>
 </resources>

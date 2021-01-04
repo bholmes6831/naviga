@@ -16,12 +16,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object ApiClient {
-    private val BASE_URL = "http://static.navigamobile.com/fizzbuzz/"
     private val networkInterface: NetworkInterface
 
     init {
         val retrofit =  Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
